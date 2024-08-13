@@ -1,12 +1,14 @@
 require("dotenv").config();
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
 const PORT = Number(process.env.PORT) || 8000;
-
-app.use(express.json()); // undefine na aawos bhanye ra postman ko json sanga link garye ko ho, yes le garda hami le body ma lekh ye ko display hoss bhanye ra ho.
 const indexRouter = require("./routes");
-// app.use(express.static("public")); //for multer
+
+app.use(morgan("tiny"));
+app.use(express.json()); // undefine na aawos bhanye ra postman ko json sanga link garye ko ho, yes le garda hami le body ma lekh ye ko display hoss bhanye ra ho.
+app.use("/resources", express.static("public"));
 
 // application level middileware ho.
 app.use((req, res, next) => {

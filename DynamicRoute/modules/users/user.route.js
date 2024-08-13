@@ -1,4 +1,16 @@
 const router = require("express").Router();
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "." + file?.originalname.split(".")[1]);
+  },
+});
+
+const upload = multer({ storage });
 
 const verify = (req, res, next) => {
   const role = req.headers.role;
@@ -45,6 +57,15 @@ router.post("/", (req, res, next) => {
   try {
     console.log(req?.body);
     res.json({ data: "Hello data from user" });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/register", upload.single("profilePic"), (req, res, next) => {
+  try {
+    console.log({ pic: req?.file });
+    res.json({ data: "User Registered Sucessfully" });
   } catch (e) {
     next(e);
   }
