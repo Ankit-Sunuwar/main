@@ -9,18 +9,18 @@ const indexRouter = require("./routes");
 // app.use(express.static("public")); //for multer
 
 // application level middileware ho.
-// app.use((req, res, next) => {
-//   req.body.currency = "NPR";
-//   next();
-// });
+app.use((req, res, next) => {
+  req.body.currency = "NPR";
+  next();
+});
 
 app.use("/", indexRouter);
 
-// error/exception handling.
-// app.use((err, req, res, next) => {
-//   const errMsg = err ? err.toString() : "Something went wrong.";
-//   res.status(500).json({ data: "", msg: errMsg });
-// });
+// middleware for error handling.
+app.use((err, req, res, next) => {
+  const errMsg = err ? err.toString() : "Something went wrong.";
+  res.status(500).json({ data: "", msg: errMsg });
+});
 
 app.listen(PORT, () => {
   console.log(`Application is running on PORT ${PORT}`);
