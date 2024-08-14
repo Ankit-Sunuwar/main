@@ -28,17 +28,17 @@ const checkRole = (sysRoles = []) => {
   };
 };
 
-const verify = (req, res, next) => {
-  const role = req.headers.role;
-  if (role === "admin") {
-    next();
-  } else {
-    throw new Error("You are not authorized");
-  }
-};
+// const verify = (req, res, next) => {
+//   const role = req.headers.role;
+//   if (role === "admin") {
+//     next();
+//   } else {
+//     throw new Error("You are not authorized");
+//   }
+// };
 
 //Read all data
-router.get("/:id", verify, checkRole(["admin"]), (req, res, next) => {
+router.get("/:id", checkRole(["admin"]), (req, res, next) => {
   //query
   // try,catch,throw ehni haru sabai error handling haru ho
   try {
