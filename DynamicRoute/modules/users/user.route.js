@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const multer = require("multer");
+const multer = require("multer"); // Photo ko lagi ho.
 const userController = require("./user.controller");
 
+// Photo ko lagi ho, photo internal memory ma rakh xa.
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/uploads");
@@ -70,15 +71,16 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// router.post("/register", upload.single("profilePic"), (req, res, next) => {
-//   try {
-//     const URL = "http://localhost:5555/resources//uploads/"; // yo developer's haru le photo ko url banauna user gar xa.
-//     const myPicture = URL + req?.file?.filename;
-//     res.json({ data: `User Registered Sucessfully in url ${myPicture}` });
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+// Photo ko lagi ho, yo ja pani rakh na milxa.
+router.post("/register", upload.single("profilePic"), (req, res, next) => {
+  try {
+    const URL = "http://localhost:5555/resources//uploads/"; // yo developer's haru le photo ko url banauna user gar xa.
+    const myPicture = URL + req?.file?.filename;
+    res.json({ data: `User Registered Sucessfully in url ${myPicture}` });
+  } catch (e) {
+    next(e);
+  }
+});
 
 //Update
 router.put("/:id", (req, res) => {

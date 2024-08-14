@@ -16,7 +16,7 @@ mongoose
     console.log("Database is error", e);
   });
 
-app.use(morgan("tiny"));
+app.use(morgan("tiny")); //URL
 app.use(express.json()); // undefine na aawos bhanye ra postman ko json sanga link garye ko ho, yes le garda hami le body ma lekh ye ko display hoss bhanye ra ho.
 app.use("/resources", express.static("public"));
 
