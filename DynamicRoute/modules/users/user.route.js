@@ -1,16 +1,17 @@
 const router = require("express").Router();
-// const multer = require("multer");
+const multer = require("multer");
+const userController = require("./user.controller");
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "public/uploads");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + "." + file?.originalname.split(".")[1]);
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "." + file?.originalname.split(".")[1]);
+  },
+});
 
-// const upload = multer({ storage });
+const upload = multer({ storage });
 
 // RBAC(role based access control)
 const checkRole = (sysRoles = []) => {
@@ -59,15 +60,15 @@ router.get("/", checkRole(["admin", "user"]), (req, res, next) => {
 });
 
 //Create
-// router.post("/:id", (req, res, next) => {
-//   // body
-//   try {
-//     console.log(req?.body);
-//     res.json({ data: "Hello data from user" });
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+router.post("/", async (req, res, next) => {
+  // body
+  try {
+    const result = await userController.create(req.body);
+    res.json({ data: result, msg: "User created successfully" });
+  } catch (e) {
+    next(e);
+  }
+});
 
 // router.post("/register", upload.single("profilePic"), (req, res, next) => {
 //   try {
@@ -79,38 +80,38 @@ router.get("/", checkRole(["admin", "user"]), (req, res, next) => {
 //   }
 // });
 
-// //Update
-// router.put("/:id", (req, res) => {
-//   //params + body
-//   try {
-//     console.log(req?.body);
-//     res.json({ data: `put data from user id ${req?.params?.id}` });
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+//Update
+router.put("/:id", (req, res) => {
+  //params + body
+  try {
+    console.log(req?.body);
+    res.json({ data: `put data from user id ${req?.params?.id}` });
+  } catch (e) {
+    next(e);
+  }
+});
 
-// //Update
-// router.patch("/:id", (req, res) => {
-//   //params + body
-//   try {
-//     console.log(req?.body);
-//     res.json({
-//       data: `patch data from user id ${req?.params?.id} `,
-//     });
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+//Update
+router.patch("/:id", (req, res) => {
+  //params + body
+  try {
+    console.log(req?.body);
+    res.json({
+      data: `patch data from user id ${req?.params?.id} `,
+    });
+  } catch (e) {
+    next(e);
+  }
+});
 
-// //Delete
-// router.delete("/:id", (req, res) => {
-//   //params
-//   try {
-//     res.json({ data: `delete data from user id ${req?.params?.id}` });
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+//Delete
+router.delete("/:id", (req, res) => {
+  //params
+  try {
+    res.json({ data: `delete data from user id ${req?.params?.id}` });
+  } catch (e) {
+    next(e);
+  }
+});
 
 module.exports = router;
