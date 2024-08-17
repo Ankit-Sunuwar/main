@@ -8,7 +8,7 @@ const PORT = Number(process.env.PORT) || 8000;
 const indexRouter = require("./routes");
 
 mongoose
-  .connect("mongodb://localhost:27017/hotel-mgnt")
+  .connect("mongodb://127.0.0.1:27017/hotel-mgmt")
   .then(() => {
     console.log("Data base is connected");
   })
